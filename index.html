@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     SOLVEWITHAI — PRODUCT HUB HOMEPAGE
+     https://solvewithai.in/
+
+     OWNER GUIDE (READ THIS FIRST):
+     -------------------------------------------------------------
+     • Everything you normally need to edit lives in ONE place:
+       the section marked  🔧 CHANGE THESE DETAILS ONLY  near the
+       bottom of this file (inside the <script> tag).
+     • To add a new product: copy an existing product object in
+       SITE_CONFIG.products, edit its fields, set enabled: true.
+       You do NOT need to touch the HTML.
+     • To hide a broken/placeholder link or image, leave its value
+       empty or keep the "PASTE-..." text — the site automatically
+       shows a clean placeholder or hides the element.
+     • After editing, save this file as  index.html  and upload it
+       to your GitHub Pages repository. Works with the custom
+       domain https://solvewithai.in/ with no extra setup.
+============================================================ -->
+
+<!-- SEO -->
+<title>SolvewithAI — Practical AI Automation for Beginners</title>
+<meta name="description" content="Explore practical AI automation resources and digital products from SolvewithAI, built for beginners who want to learn by building, testing and showing useful workflows.">
+<link rel="canonical" href="https://solvewithai.in/">
+
+<!-- Open Graph (og:image is filled from SITE_CONFIG.ogImageUrl by JavaScript) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SolvewithAI">
+<meta property="og:title" content="SolvewithAI — Practical AI Automation for Beginners">
+<meta property="og:description" content="Explore practical AI automation resources and digital products from SolvewithAI, built for beginners who want to learn by building, testing and showing useful workflows.">
+<meta property="og:url" content="https://solvewithai.in/">
+<meta property="og:image" content="" id="ogImageTag">
+
+<!-- Twitter / X card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SolvewithAI — Practical AI Automation for Beginners">
+<meta name="twitter:description" content="Explore practical AI automation resources and digital products from SolvewithAI, built for beginners who want to learn by building, testing and showing useful workflows.">
+<meta name="twitter:image" content="" id="twitterImageTag">
+
+<meta name="theme-color" content="#C0222B">
+
+<!-- ============================================================
+     GLOBAL STYLES
+============================================================ -->
+<style>
+/* ---------- Design tokens ---------- */
+:root{
+  --red: #C0222B;          /* primary brand red */
+  --red-dark: #97191F;     /* hover state */
+  --red-soft: #FBECEE;     /* light red tint */
+  --ink: #141414;          /* near-black text */
+  --ink-soft: #55565A;     /* secondary text */
+  --line: #E5E6E8;         /* borders */
+  --bg-soft: #F6F6F7;      /* soft gray section backgrounds */
+  --white: #FFFFFF;
+  --radius: 14px;
+  --maxw: 1120px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- Reset ---------- */
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body{
+  font-family:var(--font);
+  color:var(--ink);
+  background:var(--white);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+button{ font-family:inherit; }
+
+/* Visible focus states (accessibility) */
+a:focus-visible, button:focus-visible, summary:focus-visible{
+  outline:3px solid var(--red);
+  outline-offset:2px;
+  border-radius:4px;
+}
+
+/* ---------- Layout helpers ---------- */
+.container{
+  width:100%;
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:0 20px;
+}
+.section{ padding:64px 0; }
+.section--soft{ background:var(--bg-soft); }
+.section-label{
+  display:inline-block;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.14em;
+  color:var(--red);
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+.section-title{
+  font-size:clamp(24px, 5vw, 34px);
+  font-weight:800;
+  letter-spacing:-.01em;
+  line-height:1.2;
+}
+.section-sub{
+  color:var(--ink-soft);
+  font-size:16px;
+  margin-top:10px;
+  max-width:560px;
+}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:15px 26px;
+  border-radius:10px;
+  border:2px solid transparent;
+  cursor:pointer;
+  transition:background-color .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+  min-height:48px; /* touch friendly */
+}
+.btn--primary{ background:var(--red); color:#fff; }
+.btn--primary:hover{ background:var(--red-dark); transform:translateY(-1px); }
+.btn--ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
+.btn--ghost:hover{ border-color:var(--ink); transform:translateY(-1px); }
+.btn--block{ width:100%; }
+.btn[aria-disabled="true"], .btn:disabled{
+  background:var(--bg-soft);
+  color:#9A9BA0;
+  border-color:var(--line);
+  cursor:not-allowed;
+  pointer-events:none;
+  transform:none;
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:saturate(1.4) blur(6px);
+}
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:62px;
+}
+.brand{
+  font-size:19px;
+  font-weight:800;
+  letter-spacing:-.01em;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.brand .dot{
+  width:9px; height:9px;
+  background:var(--red);
+  border-radius:50%;
+  display:inline-block;
+}
+.nav-links{
+  display:none;
+  list-style:none;
+  gap:28px;
+}
+.nav-links a{
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink-soft);
+  padding:6px 2px;
+  border-bottom:2px solid transparent;
+  transition:color .15s ease, border-color .15s ease;
+}
+.nav-links a:hover{ color:var(--ink); border-color:var(--red); }
+.menu-toggle{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px; height:44px;
+  background:none;
+  border:1px solid var(--line);
+  border-radius:9px;
+  cursor:pointer;
+}
+.menu-toggle span{
+  display:block;
+  width:18px; height:2px;
+  background:var(--ink);
+  position:relative;
+  transition:background-color .15s ease;
+}
+.menu-toggle span::before,
+.menu-toggle span::after{
+  content:"";
+  position:absolute; left:0;
+  width:18px; height:2px;
+  background:var(--ink);
+  transition:transform .2s ease;
+}
+.menu-toggle span::before{ top:-6px; }
+.menu-toggle span::after{ top:6px; }
+.menu-toggle[aria-expanded="true"] span{ background:transparent; }
+.menu-toggle[aria-expanded="true"] span::before{ transform:translateY(6px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span::after{ transform:translateY(-6px) rotate(-45deg); }
+.mobile-nav{
+  display:none;
+  border-top:1px solid var(--line);
+  background:var(--white);
+  padding:8px 20px 16px;
+}
+.mobile-nav.open{ display:block; }
+.mobile-nav a{
+  display:block;
+  padding:14px 4px;
+  text-decoration:none;
+  font-weight:600;
+  font-size:16px;
+  border-bottom:1px solid var(--bg-soft);
+}
+.mobile-nav a:last-child{ border-bottom:none; }
+
+@media (min-width: 760px){
+  .nav-links{ display:flex; }
+  .menu-toggle{ display:none; }
+  .mobile-nav{ display:none !important; }
+}
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero{
+  padding:72px 0 56px;
+  border-bottom:1px solid var(--line);
+}
+.hero-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.2em;
+  color:var(--red);
+  background:var(--red-soft);
+  padding:7px 14px;
+  border-radius:999px;
+  margin-bottom:22px;
+}
+.hero h1{
+  font-size:clamp(32px, 8vw, 54px);
+  font-weight:800;
+  line-height:1.12;
+  letter-spacing:-.02em;
+  max-width:15ch;
+}
+.hero-sub{
+  margin-top:18px;
+  font-size:17px;
+  color:var(--ink-soft);
+  max-width:480px;
+}
+.hero-sub strong{ color:var(--ink); }
+.hero-ctas{
+  margin-top:30px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:stretch;
+}
+.hero-tag{
+  margin-top:14px;
+  font-size:13px;
+  color:var(--ink-soft);
+}
+@media (min-width: 560px){
+  .hero-ctas{ flex-direction:row; align-items:center; }
+}
+
+/* ============================================================
+   BUILD / TEST / SHOW STRIP
+============================================================ */
+.strip{
+  background:var(--ink);
+  color:#fff;
+  padding:34px 0;
+}
+.strip-items{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.strip-item{
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:.16em;
+}
+.strip-sep{ color:var(--red); font-weight:800; }
+.strip-line{
+  text-align:center;
+  margin-top:12px;
+  font-size:14px;
+  color:#C9CACD;
+}
+
+/* ============================================================
+   PRODUCT SECTION + CARDS
+============================================================ */
+.filter-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:24px 0 4px;
+}
+.filter-chip{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:9px 16px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--white);
+  color:var(--ink-soft);
+  cursor:pointer;
+  min-height:40px;
+  transition:all .15s ease;
+}
+.filter-chip:hover{ border-color:var(--ink); color:var(--ink); }
+.filter-chip.active{
+  background:var(--red);
+  border-color:var(--red);
+  color:#fff;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+  margin-top:26px;
+}
+@media (min-width: 640px){
+  .product-grid{ grid-template-columns:repeat(2, 1fr); }
+}
+@media (min-width: 980px){
+  .product-grid{ grid-template-columns:repeat(3, 1fr); }
+}
+
+.card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 28px rgba(20,20,20,.08);
+  border-color:#D5D6D9;
+}
+.card-media{
+  position:relative;
+  aspect-ratio:4/3;
+  background:var(--bg-soft);
+  overflow:hidden;
+}
+.card-media img{
+  width:100%; height:100%;
+  object-fit:cover;
+}
+/* Clean placeholder — never looks broken */
+.img-placeholder{
+  position:absolute; inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  color:#8B8C90;
+  font-size:13px;
+  font-weight:600;
+  text-align:center;
+  padding:16px;
+  background:
+    repeating-linear-gradient(45deg, var(--bg-soft), var(--bg-soft) 14px, #EFEFF1 14px, #EFEFF1 28px);
+}
+.img-placeholder .ph-icon{
+  width:34px; height:34px;
+  border:2px solid #C9CACD;
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  color:#A5A6AA;
+  font-size:16px;
+  background:#fff;
+}
+.card-badge{
+  position:absolute;
+  top:12px; left:12px;
+  background:var(--red);
+  color:#fff;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.12em;
+  padding:6px 12px;
+  border-radius:999px;
+}
+.card-badge--muted{ background:var(--ink); }
+.card-body{
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  flex:1;
+}
+.card-name{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.01em;
+  line-height:1.25;
+}
+.card-desc{
+  font-size:14.5px;
+  color:var(--ink-soft);
+}
+.card-audience{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--ink);
+  background:var(--bg-soft);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:7px 11px;
+  align-self:flex-start;
+}
+.card-audience::before{
+  content:"";
+  width:7px; height:7px;
+  border-radius:50%;
+  background:var(--red);
+  flex-shrink:0;
+}
+.card-footer{
+  margin-top:auto;
+  padding-top:14px;
+  border-top:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.card-price{
+  font-size:22px;
+  font-weight:800;
+}
+.card-price .price-note{
+  font-size:12px;
+  font-weight:500;
+  color:var(--ink-soft);
+  margin-left:6px;
+}
+.card-state{
+  font-size:13px;
+  color:var(--ink-soft);
+  font-style:italic;
+}
+
+/* Coming soon mini area */
+.coming-soon-area{ margin-top:40px; }
+.coming-soon-title{
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:12px;
+}
+.coming-soon-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.coming-soon-list li{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink-soft);
+  background:var(--bg-soft);
+  border:1px dashed var(--line);
+  border-radius:10px;
+  padding:12px 16px;
+}
+.coming-soon-list li::before{
+  content:"";
+  width:8px; height:8px;
+  border-radius:50%;
+  background:#C9CACD;
+  flex-shrink:0;
+}
+
+/* Empty state (no products enabled at all) */
+.empty-state{
+  text-align:center;
+  border:1px dashed var(--line);
+  border-radius:var(--radius);
+  padding:44px 24px;
+  color:var(--ink-soft);
+  font-size:15px;
+  margin-top:26px;
+}
+
+/* ============================================================
+   HOW IT WORKS
+============================================================ */
+.steps{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  margin-top:28px;
+}
+@media (min-width: 700px){
+  .steps{ grid-template-columns:repeat(3,1fr); }
+}
+.step{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:24px 22px;
+}
+.step-num{
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.12em;
+  color:var(--red);
+  margin-bottom:10px;
+}
+.step h3{ font-size:17px; font-weight:700; }
+.step p{ font-size:14px; color:var(--ink-soft); margin-top:6px; }
+.steps-note{
+  margin-top:20px;
+  font-size:14.5px;
+  color:var(--ink-soft);
+  max-width:640px;
+}
+
+/* ============================================================
+   FREE RESOURCES
+============================================================ */
+.resource-card{
+  display:flex;
+  flex-direction:column;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  margin-top:26px;
+  max-width:640px;
+}
+@media (min-width: 640px){
+  .resource-card{ flex-direction:row; align-items:stretch; }
+  .resource-media{ width:220px; flex-shrink:0; }
+}
+.resource-media{
+  position:relative;
+  aspect-ratio:16/10;
+  background:var(--bg-soft);
+}
+@media (min-width: 640px){
+  .resource-media{ aspect-ratio:auto; }
+}
+.resource-media img{ width:100%; height:100%; object-fit:cover; }
+.resource-body{
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  justify-content:center;
+}
+.resource-tag{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+  color:var(--red);
+  text-transform:uppercase;
+}
+.resource-body h3{ font-size:18px; font-weight:800; }
+.resource-body p{ font-size:14px; color:var(--ink-soft); }
+.resource-body .btn{ align-self:flex-start; margin-top:4px; }
+
+/* ============================================================
+   ABOUT
+============================================================ */
+.about-box{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-left:4px solid var(--red);
+  border-radius:var(--radius);
+  padding:28px 26px;
+  max-width:720px;
+  margin-top:22px;
+}
+.about-box p{ font-size:16px; color:var(--ink-soft); }
+.about-box p + p{ margin-top:12px; }
+.about-box strong{ color:var(--ink); }
+
+/* ============================================================
+   FAQ
+============================================================ */
+.faq-list{ margin-top:26px; max-width:720px; }
+.faq-item{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--white);
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.faq-item summary{
+  list-style:none;
+  cursor:pointer;
+  padding:17px 20px;
+  font-weight:700;
+  font-size:15.5px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+}
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary::after{
+  content:"+";
+  font-size:22px;
+  font-weight:400;
+  color:var(--red);
+  line-height:1;
+  flex-shrink:0;
+  transition:transform .2s ease;
+}
+.faq-item[open] summary::after{ transform:rotate(45deg); }
+.faq-answer{
+  padding:0 20px 18px;
+  font-size:14.5px;
+  color:var(--ink-soft);
+}
+.faq-answer a{ color:var(--red); font-weight:600; }
+.faq-note{
+  margin-top:16px;
+  font-size:13.5px;
+  color:var(--ink-soft);
+}
+
+/* ============================================================
+   CONTACT
+============================================================ */
+.contact-card{
+  background:var(--ink);
+  color:#fff;
+  border-radius:var(--radius);
+  padding:40px 26px;
+  text-align:center;
+}
+.contact-card h2{
+  font-size:clamp(24px, 5vw, 32px);
+  font-weight:800;
+  letter-spacing:-.01em;
+}
+.contact-card p{
+  color:#C9CACD;
+  margin-top:10px;
+  font-size:15.5px;
+  max-width:460px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.contact-actions{
+  margin-top:26px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:center;
+}
+@media (min-width: 520px){
+  .contact-actions{ flex-direction:row; justify-content:center; }
+}
+.btn--on-dark{
+  background:#fff;
+  color:var(--ink);
+}
+.btn--on-dark:hover{ background:#EDEDEF; transform:translateY(-1px); }
+.btn--outline-dark{
+  background:transparent;
+  color:#fff;
+  border-color:rgba(255,255,255,.35);
+}
+.btn--outline-dark:hover{ border-color:#fff; transform:translateY(-1px); }
+
+/* ============================================================
+   FOOTER
+============================================================ */
+.site-footer{
+  border-top:1px solid var(--line);
+  padding:40px 0 32px;
+  background:var(--white);
+}
+.footer-inner{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  align-items:flex-start;
+}
+@media (min-width: 700px){
+  .footer-inner{
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+  }
+}
+.footer-tag{
+  font-size:13px;
+  color:var(--ink-soft);
+  font-weight:600;
+  letter-spacing:.04em;
+  margin-top:4px;
+}
+.footer-links{
+  display:flex;
+  gap:22px;
+  list-style:none;
+}
+.footer-links a{
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  color:var(--ink-soft);
+}
+.footer-links a:hover{ color:var(--red); }
+.footer-copy{
+  margin-top:26px;
+  padding-top:20px;
+  border-top:1px solid var(--bg-soft);
+  font-size:13px;
+  color:#8B8C90;
+  text-align:center;
+}
+
+/* ============================================================
+   SUBTLE FADE-IN ANIMATION (respects reduced motion)
+============================================================ */
+.fade-item{
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+.fade-item.visible{ opacity:1; transform:none; }
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation:none !important;
+    transition:none !important;
+  }
+  .fade-item{ opacity:1; transform:none; }
+  .card:hover, .btn:hover{ transform:none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="SolvewithAI — home">
+      <span class="dot" aria-hidden="true"></span>
+      <span id="brandNameHeader">SolvewithAI</span>
+    </a>
+
+    <nav aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="#products">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="#products">Products</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============================================================
+       HERO
+  ============================================================= -->
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="container">
+      <span class="hero-kicker" id="heroKicker">SOLVEWITHAI</span>
+      <h1 id="heroTitle">Practical AI automation for beginners.</h1>
+      <p class="hero-sub">
+        Build useful things.<br>
+        Test them.<br>
+        Understand what works.<br>
+        <strong>Then start showing what you built.</strong>
+      </p>
+
+      <div class="hero-ctas">
+        <a class="btn btn--primary" href="#products">Explore Products</a>
+        <!-- Secondary CTA: injected by JavaScript only if the
+             starting-point product is enabled. -->
+        <span id="heroSecondarySlot"></span>
+      </div>
+      <p class="hero-tag" id="heroTagline"></p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BUILD / TEST / SHOW STRIP
+  ============================================================= -->
+  <section class="strip" aria-label="SolvewithAI philosophy">
+    <div class="container">
+      <div class="strip-items">
+        <span class="strip-item">BUILD</span>
+        <span class="strip-sep" aria-hidden="true">/</span>
+        <span class="strip-item">TEST</span>
+        <span class="strip-sep" aria-hidden="true">/</span>
+        <span class="strip-item">SHOW</span>
+      </div>
+      <p class="strip-line">Practical resources for people who want to learn by building.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PRODUCT SECTION (cards generated from SITE_CONFIG)
+  ============================================================= -->
+  <section class="section" id="products" aria-labelledby="productsTitle">
+    <div class="container">
+      <span class="section-label">Product Hub</span>
+      <h2 class="section-title" id="productsTitle">EXPLORE THE PRODUCTS</h2>
+      <p class="section-sub">Choose the resource that matches what you are trying to learn or build.</p>
+
+      <!-- Filter chips: only shown when there are 2+ active products -->
+      <div class="filter-bar" id="filterBar" role="group" aria-label="Filter products" hidden></div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- Product cards are rendered here by JavaScript -->
+      </div>
+
+      <!-- Coming soon area: only shown if a product has showComingSoon: true -->
+      <div id="comingSoonSlot"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW IT WORKS
+  ============================================================= -->
+  <section class="section section--soft" aria-labelledby="howTitle">
+    <div class="container">
+      <span class="section-label">Simple process</span>
+      <h2 class="section-title" id="howTitle">HOW IT WORKS</h2>
+
+      <div class="steps">
+        <div class="step fade-item">
+          <div class="step-num">01</div>
+          <h3>Choose what you need</h3>
+          <p>Pick the product that matches your current level and goal.</p>
+        </div>
+        <div class="step fade-item">
+          <div class="step-num">02</div>
+          <h3>Open the product details</h3>
+          <p>Every product has its own page with a clear explanation.</p>
+        </div>
+        <div class="step fade-item">
+          <div class="step-num">03</div>
+          <h3>Get started</h3>
+          <p>Follow the material, build along, and start showing your work.</p>
+        </div>
+      </div>
+
+      <p class="steps-note">
+        Each product has its own page with the details, preview, FAQs and checkout
+        information you need before buying.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FREE RESOURCES (one configurable slot)
+  ============================================================= -->
+  <section class="section" id="freeResources" aria-labelledby="freeTitle" hidden>
+    <div class="container">
+      <span class="section-label">No cost</span>
+      <h2 class="section-title" id="freeTitle">FREE RESOURCES</h2>
+      <p class="section-sub">Start with something useful before you decide what to buy.</p>
+      <div id="resourceSlot"><!-- Rendered by JavaScript --></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT
+  ============================================================= -->
+  <section class="section section--soft" id="about" aria-labelledby="aboutTitle">
+    <div class="container">
+      <span class="section-label">About the brand</span>
+      <h2 class="section-title" id="aboutTitle">WHAT IS SOLVEWITHAI?</h2>
+      <div class="about-box fade-item">
+        <p>
+          SolvewithAI is a practical learning and digital-product brand focused on
+          helping beginners understand AI automation by <strong>building</strong>,
+          <strong>testing</strong> and <strong>explaining</strong> useful workflows.
+        </p>
+        <p>
+          No hype. No shortcuts. Just clear resources that help you learn by doing.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FAQ (small, navigation-level only)
+  ============================================================= -->
+  <section class="section" aria-labelledby="faqTitle">
+    <div class="container">
+      <span class="section-label">Quick answers</span>
+      <h2 class="section-title" id="faqTitle">FAQ</h2>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>What is SolvewithAI?</summary>
+          <div class="faq-answer">
+            A practical learning and digital-product brand that helps beginners
+            understand AI automation by building, testing and showing useful workflows.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Where can I see product details?</summary>
+          <div class="faq-answer">
+            Each product has its own dedicated page. Click <strong>View Product</strong>
+            on any card to open the full details, preview and FAQs for that product.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Where do I buy a product?</summary>
+          <div class="faq-answer">
+            On the individual product page. The homepage helps you choose — the product
+            page handles the checkout.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Do I need to buy anything before exploring?</summary>
+          <div class="faq-answer">
+            No. You can browse everything freely. Product pages explain exactly what is
+            included before you decide.
+          </div>
+        </details>
+      </div>
+
+      <p class="faq-note">
+        For product-specific questions — refunds, exact contents, delivery or
+        eligibility — please check the individual product page.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+  ============================================================= -->
+  <section class="section" id="contact" aria-labelledby="contactTitle">
+    <div class="container">
+      <div class="contact-card fade-item">
+        <h2 id="contactTitle">NEED HELP?</h2>
+        <p>Have a question about a product or need help finding the right resource?</p>
+        <div class="contact-actions" id="contactActions">
+          <!-- Buttons injected by JavaScript from SITE_CONFIG
+               (hidden automatically if values are missing) -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a class="brand" href="#top">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="brandNameFooter">SolvewithAI</span>
+        </a>
+        <p class="footer-tag">Build. Test. Show.</p>
+      </div>
+      <ul class="footer-links" id="footerLinks">
+        <li><a href="#products">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <!-- Instagram + Contact links injected by JavaScript -->
+      </ul>
+    </div>
+    <p class="footer-copy">© 2026 <span id="brandNameCopy">SolvewithAI</span>. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+// ================================================================
+// 🔧 CHANGE THESE DETAILS ONLY
+// ================================================================
+//
+// HOW TO ADD A NEW PRODUCT:
+// ----------------------------------------------------------------
+//  1. Copy an existing product object (everything between { and }).
+//  2. Change the product name.
+//  3. Change the description.
+//  4. Change the audience.
+//  5. Change the price.
+//  6. Paste the hosted product-cover image URL into imageUrl.
+//  7. Paste the permanent product landing-page URL into productUrl
+//     (example: https://solvewithai.in/product-2/ — always give each
+//      product its OWN permanent path, never a ?query= URL).
+//  8. Change enabled to true.
+//  9. Change the badge if needed.
+// 10. Save and upload this index.html file to GitHub Pages. Done.
+//
+// IMPORTANT:
+// Do NOT change the HTML structure to add a normal product.
+// Use this configuration section instead.
+//
+// SAFE VALUES:
+// • enabled: false        → product is hidden from the main list.
+// • showComingSoon: true  → product appears in a small "Coming Soon"
+//                           area instead (only for enabled:false items).
+// • Any value left empty ("") or containing "PASTE-" is treated as
+//   missing: images show a clean placeholder, buttons get disabled,
+//   Instagram/email links are hidden. Visitors never see raw
+//   placeholder text.
+// • category is only used for the filter chips, which appear
+//   automatically when you have 2 or more active products.
+//   Suggested values: "beginner", "automation", "resources".
+// • isStartingPoint: true marks the product used by the hero
+//   secondary button ("Start with ..."). Keep only ONE product
+//   marked as the starting point.
+// ================================================================
+
+var SITE_CONFIG = {
+    brandName: "SolvewithAI",
+    websiteUrl: "https://solvewithai.in/",
+    instagramUrl: "https://www.instagram.com/solvewith.ai?stkn=OTZlMjdnb2NzMXk0",   // ← paste your Instagram profile URL
+    contactEmail: "solvewith.ai@outlook.com",           // ← paste your support email
+
+    // Social share image (Open Graph / Twitter card).
+    // Paste a hosted image URL (at least 1200x630 recommended).
+    ogImageUrl: "https://imgh.in/host/ks0mcc",
+
+    heroTitle: "Practical AI automation for beginners.",
+    heroSubtitle: "Build → Test → Show → Start",
+
+    // ONE free resource slot. Set enabled: true when you have one.
+    freeResource: {
+        enabled: false,
+        title: "FREE 8-PAGE PREVIEW",
+        description: "A short sample so you can see how the material is written before you decide.",
+        imageUrl: "",                                  // hosted image URL (or leave empty for placeholder)
+        url: "https://solvewithai.in/zero-to-first-client/"  // where the free resource lives
+    },
+
+    products: [
+        {
+            enabled: true,                 // ← true = visible in the product grid
+            showComingSoon: false,
+            status: "available",
+            isStartingPoint: true,         // ← used by the hero "Start with..." button
+            name: "Zero to First Client",
+            shortDescription: "A practical beginner roadmap for building, testing and showing your first AI automation workflow.",
+            audience: "For beginners starting from zero",
+            price: "₹299",
+            category: "beginner",          // used by filters when you have 2+ products
+            imageUrl: "https://imgh.in/host/nhsef9", // ← paste hosted cover image URL
+            productUrl: "https://solvewithai.in/zero-to-first-client/",
+            badge: "START HERE",
+            buttonText: "VIEW PRODUCT"
+        },
+
+        {
+            enabled: false,                // ← change to true when this product launches
+            showComingSoon: false,         // ← set true to tease it in a small "Coming Soon" area
+            status: "coming-soon",
+            isStartingPoint: false,
+            name: "Product #2",
+            shortDescription: "Coming soon.",
+            audience: "",
+            price: "",
+            category: "automation",
+            imageUrl: "",
+            productUrl: "",                // ← e.g. https://solvewithai.in/product-2/
+            badge: "COMING SOON",
+            buttonText: "COMING SOON"
+        },
+
+        {
+            enabled: false,
+            showComingSoon: false,
+            status: "coming-soon",
+            isStartingPoint: false,
+            name: "Product #3",
+            shortDescription: "Coming soon.",
+            audience: "",
+            price: "",
+            category: "resources",
+            imageUrl: "",
+            productUrl: "",                // ← e.g. https://solvewithai.in/product-3/
+            badge: "COMING SOON",
+            buttonText: "COMING SOON"
+        }
+    ]
+};
+
+// ================================================================
+// RENDERING LOGIC
+// (You normally never need to edit anything below this line.)
+// ================================================================
+
+(function () {
+  "use strict";
+
+  /* ----------------------------------------
+     HELPERS
+  ---------------------------------------- */
+
+  // A value counts as "usable" only if it is non-empty and does not
+  // still contain the "PASTE-" marker. This guarantees visitors never
+  // see raw placeholder text or broken links.
+  function isUsable(value) {
+    return typeof value === "string" &&
+           value.trim() !== "" &&
+           value.indexOf("PASTE-") === -1;
+  }
+
+  function escapeHtml(text) {
+    return String(text == null ? "" : text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  // Safe external-link attributes (new tab without tab-nabbing risk).
+  function externalAttrs(url) {
+    var isExternal = /^https?:/i.test(url) &&
+                     url.indexOf("solvewithai.in") === -1;
+    return isExternal ? ' target="_blank" rel="noopener noreferrer"' : "";
+  }
+
+  /* ----------------------------------------
+     PRODUCT IMAGE / PLACEHOLDER
+  ---------------------------------------- */
+  function mediaHtml(imageUrl, altText, badgeHtml) {
+    var inner;
+    if (isUsable(imageUrl)) {
+      inner =
+        '<img src="' + escapeHtml(imageUrl) + '" ' +
+        'alt="' + escapeHtml(altText) + '" ' +
+        'loading="lazy" decoding="async" width="640" height="480">';
+    } else {
+      // Clean, intentional-looking placeholder — never a broken image.
+      inner =
+        '<div class="img-placeholder" role="img" aria-label="Product image coming soon">' +
+          '<span class="ph-icon" aria-hidden="true">▦</span>' +
+          '<span>Product image coming soon</span>' +
+        '</div>';
+    }
+    return '<div class="card-media">' + inner + (badgeHtml || "") + '</div>';
+  }
+
+  /* ----------------------------------------
+     PRODUCT CARD
+  ---------------------------------------- */
+  function productCardHtml(product) {
+    var hasUrl = isUsable(product.productUrl);
+
+    var badgeHtml = "";
+    if (isUsable(product.badge)) {
+      var badgeClass = (product.status === "available")
+        ? "card-badge"
+        : "card-badge card-badge--muted";
+      badgeHtml = '<span class="' + badgeClass + '">' + escapeHtml(product.badge) + '</span>';
+    }
+
+    var audienceHtml = "";
+    if (isUsable(product.audience)) {
+      audienceHtml = '<p class="card-audience">' + escapeHtml(product.audience) + '</p>';
+    }
+
+    var priceHtml = "";
+    if (isUsable(product.price)) {
+      priceHtml =
+        '<p class="card-price">' + escapeHtml(product.price) +
+        '<span class="price-note">One-time · Digital download</span></p>';
+    }
+
+    // Button: real link when a URL exists, otherwise disabled state.
+    var buttonHtml;
+    if (hasUrl) {
+      buttonHtml =
+        '<a class="btn btn--primary btn--block" href="' + escapeHtml(product.productUrl) + '"' +
+        externalAttrs(product.productUrl) + '>' +
+        escapeHtml(isUsable(product.buttonText) ? product.buttonText : "VIEW PRODUCT") +
+        '</a>';
+    } else {
+      buttonHtml =
+        '<span class="btn btn--block" aria-disabled="true">Coming Soon</span>' +
+        '<p class="card-state">Details coming soon.</p>';
+    }
+
+    return (
+      '<article class="card fade-item" data-category="' +
+        escapeHtml((product.category || "all").toLowerCase()) + '">' +
+        mediaHtml(product.imageUrl, product.name + " — product cover", badgeHtml) +
+        '<div class="card-body">' +
+          '<h3 class="card-name">' + escapeHtml(product.name) + '</h3>' +
+          '<p class="card-desc">' + escapeHtml(product.shortDescription || "") + '</p>' +
+          audienceHtml +
+          '<div class="card-footer">' +
+            priceHtml +
+            buttonHtml +
+          '</div>' +
+        '</div>' +
+      '</article>'
+    );
+  }
+
+  /* ----------------------------------------
+     RENDER: PRODUCTS
+  ---------------------------------------- */
+  var allProducts = Array.isArray(SITE_CONFIG.products) ? SITE_CONFIG.products : [];
+  var activeProducts = allProducts.filter(function (p) { return p && p.enabled === true; });
+
+  var grid = document.getElementById("productGrid");
+
+  if (activeProducts.length === 0) {
+    grid.outerHTML =
+      '<div class="empty-state" id="productGrid">New resources are being prepared. Please check back soon.</div>';
+  } else {
+    grid.innerHTML = activeProducts.map(productCardHtml).join("");
+  }
+
+  /* ----------------------------------------
+     RENDER: FILTER CHIPS
+     (Only when 2+ active products — filtering is
+      unnecessary with a single product.)
+  ---------------------------------------- */
+  var filterBar = document.getElementById("filterBar");
+  if (activeProducts.length >= 2) {
+    var categories = [];
+    activeProducts.forEach(function (p) {
+      var cat = (p.category || "").toLowerCase().trim();
+      if (cat && categories.indexOf(cat) === -1) categories.push(cat);
+    });
+
+    var chips = [{ key: "all", label: "ALL" }].concat(
+      categories.map(function (c) { return { key: c, label: c.toUpperCase() }; })
+    );
+
+    filterBar.hidden = false;
+    filterBar.innerHTML = chips.map(function (chip, index) {
+      return '<button type="button" class="filter-chip' + (index === 0 ? " active" : "") +
+             '" data-filter="' + escapeHtml(chip.key) + '" aria-pressed="' + (index === 0) + '">' +
+             escapeHtml(chip.label) + '</button>';
+    }).join("");
+
+    filterBar.addEventListener("click", function (event) {
+      var chip = event.target.closest(".filter-chip");
+      if (!chip) return;
+      var filterKey = chip.getAttribute("data-filter");
+
+      filterBar.querySelectorAll(".filter-chip").forEach(function (btn) {
+        var isActive = btn === chip;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+
+      document.querySelectorAll("#productGrid .card").forEach(function (card) {
+        var matches = (filterKey === "all") ||
+                      (card.getAttribute("data-category") === filterKey);
+        card.style.display = matches ? "" : "none";
+      });
+    });
+  }
+
+  /* ----------------------------------------
+     RENDER: COMING SOON AREA
+     (Only for products explicitly marked
+      showComingSoon: true — no fake placeholders.)
+  ---------------------------------------- */
+  var comingSoonProducts = allProducts.filter(function (p) {
+    return p && p.enabled === false && p.showComingSoon === true && isUsable(p.name);
+  });
+
+  if (comingSoonProducts.length > 0) {
+    document.getElementById("comingSoonSlot").innerHTML =
+      '<div class="coming-soon-area">' +
+        '<p class="coming-soon-title">Coming Soon</p>' +
+        '<ul class="coming-soon-list">' +
+          comingSoonProducts.map(function (p) {
+            return "<li>" + escapeHtml(p.name) + "</li>";
+          }).join("") +
+        '</ul>' +
+      '</div>';
+  }
+
+  /* ----------------------------------------
+     RENDER: HERO (title, secondary CTA)
+  ---------------------------------------- */
+  if (isUsable(SITE_CONFIG.heroTitle)) {
+    document.getElementById("heroTitle").textContent = SITE_CONFIG.heroTitle;
+  }
+  if (isUsable(SITE_CONFIG.heroSubtitle)) {
+    document.getElementById("heroTagline").textContent = SITE_CONFIG.heroSubtitle;
+  }
+
+  // Secondary hero button — only shown when the starting-point
+  // product is enabled AND has a valid URL.
+  var startingProduct = activeProducts.filter(function (p) {
+    return p.isStartingPoint === true && isUsable(p.productUrl);
+  })[0];
+
+  if (startingProduct) {
+    document.getElementById("heroSecondarySlot").innerHTML =
+      '<a class="btn btn--ghost" href="' + escapeHtml(startingProduct.productUrl) + '"' +
+      externalAttrs(startingProduct.productUrl) + '>Start with ' +
+      escapeHtml(startingProduct.name) + '</a>';
+  }
+
+  /* ----------------------------------------
+     RENDER: FREE RESOURCE (single slot)
+  ---------------------------------------- */
+  var resource = SITE_CONFIG.freeResource;
+  if (resource && resource.enabled === true && isUsable(resource.title)) {
+    document.getElementById("freeResources").hidden = false;
+
+    var resourceButton = "";
+    if (isUsable(resource.url)) {
+      resourceButton =
+        '<a class="btn btn--ghost" href="' + escapeHtml(resource.url) + '"' +
+        externalAttrs(resource.url) + '>Open Resource</a>';
+    }
+
+    document.getElementById("resourceSlot").innerHTML =
+      '<div class="resource-card fade-item">' +
+        '<div class="resource-media">' +
+          (isUsable(resource.imageUrl)
+            ? '<img src="' + escapeHtml(resource.imageUrl) + '" alt="' +
+              escapeHtml(resource.title) + '" loading="lazy" decoding="async">'
+            : '<div class="img-placeholder" role="img" aria-label="Resource image coming soon">' +
+                '<span class="ph-icon" aria-hidden="true">▦</span>' +
+                '<span>Image coming soon</span>' +
+              '</div>') +
+        '</div>' +
+        '<div class="resource-body">' +
+          '<span class="resource-tag">Free</span>' +
+          '<h3>' + escapeHtml(resource.title) + '</h3>' +
+          '<p>' + escapeHtml(resource.description || "") + '</p>' +
+          resourceButton +
+        '</div>' +
+      '</div>';
+  }
+
+  /* ----------------------------------------
+     RENDER: CONTACT + FOOTER LINKS
+     (Email / Instagram hidden when missing.)
+  ---------------------------------------- */
+  var hasEmail = isUsable(SITE_CONFIG.contactEmail);
+  var hasInstagram = isUsable(SITE_CONFIG.instagramUrl);
+  var contactActions = document.getElementById("contactActions");
+  var footerLinks = document.getElementById("footerLinks");
+
+  if (hasEmail) {
+    contactActions.insertAdjacentHTML("beforeend",
+      '<a class="btn btn--on-dark" href="mailto:' + escapeHtml(SITE_CONFIG.contactEmail) + '">' +
+      'Contact SolvewithAI</a>');
+    footerLinks.insertAdjacentHTML("beforeend",
+      '<li><a href="mailto:' + escapeHtml(SITE_CONFIG.contactEmail) + '">Contact</a></li>');
+  }
+
+  if (hasInstagram) {
+    contactActions.insertAdjacentHTML("beforeend",
+      '<a class="btn btn--outline-dark" href="' + escapeHtml(SITE_CONFIG.instagramUrl) + '"' +
+      ' target="_blank" rel="noopener noreferrer">Instagram</a>');
+    footerLinks.insertAdjacentHTML("beforeend",
+      '<li><a href="' + escapeHtml(SITE_CONFIG.instagramUrl) + '"' +
+      ' target="_blank" rel="noopener noreferrer">Instagram</a></li>');
+  }
+
+  /* ----------------------------------------
+     LINK / META APPLICATION
+     (Brand name + OG image applied from config,
+      never hardcoded in multiple places.)
+  ---------------------------------------- */
+  if (isUsable(SITE_CONFIG.brandName)) {
+    ["brandNameHeader", "brandNameFooter", "brandNameCopy", "heroKicker"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = SITE_CONFIG.brandName;
+    });
+  }
+
+  if (isUsable(SITE_CONFIG.ogImageUrl)) {
+    document.getElementById("ogImageTag").setAttribute("content", SITE_CONFIG.ogImageUrl);
+    document.getElementById("twitterImageTag").setAttribute("content", SITE_CONFIG.ogImageUrl);
+  }
+
+  /* ----------------------------------------
+     MOBILE MENU
+  ---------------------------------------- */
+  var menuToggle = document.getElementById("menuToggle");
+  var mobileNav = document.getElementById("mobileNav");
+
+  menuToggle.addEventListener("click", function () {
+    var isOpen = mobileNav.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+  });
+
+  // Close the mobile menu after tapping a link.
+  mobileNav.addEventListener("click", function (event) {
+    if (event.target.tagName === "A") {
+      mobileNav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  // Close the mobile menu with the Escape key (accessibility).
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && mobileNav.classList.contains("open")) {
+      mobileNav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.focus();
+    }
+  });
+
+  /* ----------------------------------------
+     ACCESSIBILITY HELPERS — SUBTLE FADE-IN
+     (Skipped entirely when the visitor prefers
+      reduced motion; content is visible regardless.)
+  ---------------------------------------- */
+  var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fadeItems = document.querySelectorAll(".fade-item");
+
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    fadeItems.forEach(function (item) { item.classList.add("visible"); });
+  } else {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeItems.forEach(function (item) { observer.observe(item); });
+  }
+})();
+</script>
+</body>
+</html>
